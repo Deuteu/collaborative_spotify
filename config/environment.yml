@@ -1,0 +1,11 @@
+default: &default
+  example: value
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
