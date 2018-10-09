@@ -19,6 +19,9 @@ jobs:
         - ./vendor/bundle
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
     - run:
+        name: Guideline style check
+        command: bundle exec rubocop
+    - run:
         name: Database setup
         command: |
           bundle exec rake db:create
