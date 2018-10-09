@@ -15,5 +15,10 @@ module CollaborativeSpotify
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    config.before_configuration do
+      require "#{Rails.root}/lib/yaml_env_loader.rb"
+      ::YamlEnvLoader.call
+    end
   end
 end
