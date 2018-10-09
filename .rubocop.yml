@@ -1,0 +1,34 @@
+AllCops:
+  Exclude:
+    - bin/*
+    - config.ru
+    - config/application.rb
+    - config/boot.rb
+    - config/puma.rb
+    - config/spring.rb
+    - db/schema.rb
+    - Gemfile
+    - Rakefile
+    - spec/*_helper.rb
+    - test/application_system_test_case.rb
+    - test/test_helper.rb
+    - vendor/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+Metrics/LineLength:
+  Max: 140
+Metrics/MethodLength:
+  Max: 30
+Layout/DotPosition:
+  EnforcedStyle: trailing
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+Lint/Void:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - config/initializers/*
