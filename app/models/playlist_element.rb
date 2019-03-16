@@ -13,8 +13,6 @@ class PlaylistElement < ApplicationRecord
   scope :active, -> { where(removed_at: nil) }
   scope :removed, -> { where.not(removed_at: nil) }
 
-  before_save :prevent_double_remove
-
   def remove
     update(removed_at: Time.current)
   end
@@ -25,6 +23,24 @@ class PlaylistElement < ApplicationRecord
 
   def active?
     !removed?
+  end
+
+  def track
+    @track ||= RSpotify::Track.find(spotify_id)
+  end
+
+  def track_loaded?
+    !@track.nil?
+  end
+
+  def load_track(track)
+    @track = track if track.is_a?(RSpotify::Track)
+  end
+
+  def duration
+    return 0 unless track
+
+    (track.duration_ms / 1000.0).ceil
   end
 
   private
