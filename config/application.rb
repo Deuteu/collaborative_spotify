@@ -36,5 +36,7 @@ module CollaborativeSpotify
       require "#{Rails.root}/lib/yaml_env_loader.rb"
       ::YamlEnvLoader.call
     end
+
+    config.consider_all_requests_local = ENV['DEBUG'].present?
   end
 end
