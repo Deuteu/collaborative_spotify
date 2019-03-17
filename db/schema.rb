@@ -10,6 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_03_16_152825) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "playlist_elements", force: :cascade do |t|
+    t.integer "playlist_id", null: false
+    t.integer "user_id", null: false
+    t.string "spotify_id", null: false
+    t.datetime "removed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id", "spotify_id", "user_id"], name: "unique_index_elements_on_playlist_id_and_user_id", unique: true
+    t.index ["playlist_id"], name: "index_playlist_elements_on_playlist_id"
+    t.index ["spotify_id"], name: "index_playlist_elements_on_spotify_id"
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
