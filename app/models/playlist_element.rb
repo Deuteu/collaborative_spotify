@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rspotify/collection_retriever'
+
 class PlaylistElement < ApplicationRecord
   belongs_to :user
   belongs_to :playlist
@@ -41,6 +43,24 @@ class PlaylistElement < ApplicationRecord
     return 0 unless track
 
     (track.duration_ms / 1000.0).ceil
+  end
+
+  class << self
+    def with_track(elements)
+      track_ids = elements.each_with_object([]) do |e, ids|
+        ids << e.spotify_id unless e.track_loaded?
+      end
+      return elements unless track_ids.any?
+
+      track_by_id = RSpotify::CollectionRetriever.get(RSpotify::Track, track_ids)
+
+      elements.each do |e|
+        e.load_track(track_by_id[e.spotify_id])
+      end
+    rescue RestClient::BadRequest, RSpotify::MissingAuthentication
+      Rails.logger.info('PlaylistElement.with_track >> Error')
+      elements
+    end
   end
 
   private
