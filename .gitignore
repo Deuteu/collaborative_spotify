@@ -31,3 +31,5 @@
 
 # Secret config
 config/environment_secret.yml
+
+coverage
