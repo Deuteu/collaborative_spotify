@@ -45,6 +45,19 @@ class PlaylistElement < ApplicationRecord
     (track.duration_ms / 1000.0).ceil
   end
 
+  with_options allow_nil: true do
+    delegate :id, to: :track, prefix: true
+    delegate :name, to: :track
+    delegate :album, :artists, to: :track
+    delegate :name, :id, to: :album, prefix: true
+  end
+
+  def artist_name
+    return nil unless artists
+
+    artists.map(&:name).join(', ')
+  end
+
   class << self
     def with_track(elements)
       track_ids = elements.each_with_object([]) do |e, ids|
