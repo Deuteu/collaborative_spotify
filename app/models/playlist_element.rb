@@ -14,12 +14,6 @@ class PlaylistElement < ApplicationRecord
 
   before_save :prevent_double_remove
 
-  private
-
-  def prevent_double_remove
-    clear_attribute_changes(:removed_at) if removed_at_changed? && !removed_at_was.nil?
-  end
-
   def remove
     update(removed_at: Time.now)
   end
@@ -30,5 +24,11 @@ class PlaylistElement < ApplicationRecord
 
   def active?
     !removed?
+  end
+
+  private
+
+  def prevent_double_remove
+    clear_attribute_changes([:removed_at]) if removed_at_changed? && !removed_at_was.nil?
   end
 end
