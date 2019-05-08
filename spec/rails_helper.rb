@@ -1,6 +1,8 @@
 unless ENV['INGNORE_COVERAGE']
   require 'simplecov'
-  SimpleCov.start 'rails'
+  SimpleCov.start 'rails' do
+    add_filter %r{^/factories/}
+  end
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
