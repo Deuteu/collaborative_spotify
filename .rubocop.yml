@@ -32,3 +32,13 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Exclude:
     - config/initializers/*
+
+Rails:
+  Enabled: true
+
+Rails/CreateTableWithTimestamps:
+  Exclude:
+  - db/migrate/20190316152647_create_playlists.rb
+Rails/Output:
+  Exclude:
+    - lib/yaml_env_loader.rb

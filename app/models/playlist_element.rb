@@ -4,8 +4,9 @@ class PlaylistElement < ApplicationRecord
   belongs_to :user
   belongs_to :playlist
 
-  validates_presence_of :spotify_id, :user, :playlist
-  validates_uniqueness_of :spotify_id, scope: %i[playlist user]
+  validates :spotify_id, presence: true, uniqueness: {scope: %i[playlist user]}
+  validates :user, presence: true
+  validates :playlist, presence: true
 
   before_save :prevent_double_remove
 
@@ -15,7 +16,7 @@ class PlaylistElement < ApplicationRecord
   before_save :prevent_double_remove
 
   def remove
-    update(removed_at: Time.now)
+    update(removed_at: Time.current)
   end
 
   def removed?

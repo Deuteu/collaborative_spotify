@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Playlist < ApplicationRecord
-  validates_presence_of :name
+  validates :name, presence: true
 
-  has_many :elements, class_name: 'PlaylistElement', inverse_of: :playlist
-  has_many :active_elements, -> { active }, class_name: 'PlaylistElement', inverse_of: :playlist
+  with_options dependent: :destroy, inverse_of: :playlist do
+    has_many :elements, class_name: 'PlaylistElement'
+    has_many :active_elements, -> { active }, class_name: 'PlaylistElement'
+  end
 end
