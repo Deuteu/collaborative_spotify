@@ -11,7 +11,7 @@ module YamlEnvLoader
     private
 
     def get_yaml(*path)
-      file = File.join(Rails.root, path)
+      file = Rails.root.join(*path)
 
       return {} unless File.exist?(file)
 
@@ -20,7 +20,7 @@ module YamlEnvLoader
     end
 
     def read_config(env_config)
-      return unless env_config.present?
+      return if env_config.blank?
 
       set_keys = env_config.each_with_object([]) do |(k, v), a|
         key = k.upcase
