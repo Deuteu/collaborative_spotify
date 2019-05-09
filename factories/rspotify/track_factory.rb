@@ -9,8 +9,8 @@ FactoryBot.define do
     end
 
     transient do
-      album { nil }
-      artists { [] }
+      album { FactoryBot.create(:album, :partially_loaded) }
+      artists { [FactoryBot.create(:artist, :partially_loaded)] }
       available_markets { %w[FR JP US] }
       disc_number { 1 }
       duration_ms { 5.minutes.to_i * 1000 }
@@ -32,7 +32,7 @@ FactoryBot.define do
         id { '7GhIk7Il098yCjg4BQjzvb' }
 
         # album
-        artists { [FactoryBot.create(:artist, :astley, :partially_loaded).as_json] }
+        artists { [FactoryBot.create(:artist, :astley, :partially_loaded)] }
         available_markets { %w[AR BO BR CA CH DO EC GT FR HK HN ID IN JP NI PA PE PH PY SG SV TH TW US UY VN] }
         disc_number { 1 }
         duration_ms { 212_826 }
@@ -50,7 +50,7 @@ FactoryBot.define do
         id { '6Sy9BUbgFse0n0LPA5lwy5' }
 
         # album
-        artists { [FactoryBot.create(:artist, :darude, :partially_loaded).as_json] }
+        artists { [FactoryBot.create(:artist, :darude, :partially_loaded)] }
         available_markets { nil }
         disc_number { 1 }
         duration_ms { 225_493 }
@@ -68,8 +68,8 @@ FactoryBot.define do
         base.merge(
           {
             type: type,
-            album: album,
-            artists: artists,
+            album: album&.as_json,
+            artists: artists&.map(&:as_json),
             available_markets: available_markets,
             disc_number: disc_number,
             duration_ms: duration_ms,
