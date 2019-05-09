@@ -71,4 +71,5 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include JsonResponse, type: :request, api: true
+  config.include JsonRequest, type: :request, api: true
 end
