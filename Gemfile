@@ -50,3 +50,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Spotify client
 gem 'rspotify', '>= 2.3.1'
+
+# Awesome print
+gem 'awesome_print'
