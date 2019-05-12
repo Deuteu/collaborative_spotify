@@ -53,3 +53,6 @@ gem 'rspotify', '>= 2.3.1'
 
 # Awesome print
 gem 'awesome_print'
+
+# Webpacker for React
+gem 'webpacker'
