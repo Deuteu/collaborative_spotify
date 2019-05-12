@@ -12,4 +12,6 @@ Rails.application.routes.draw do
       post 'tracks', action: :add_track
     end
   end
+
+  get '*path' => 'views#home'
 end
