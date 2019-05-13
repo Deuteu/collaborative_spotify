@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'views#home'
 
   get 'spotify/search', to: 'spotify#search'
 
@@ -11,4 +12,6 @@ Rails.application.routes.draw do
       post 'tracks', action: :add_track
     end
   end
+
+  get '*path' => 'views#home'
 end

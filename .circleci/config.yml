@@ -17,7 +17,9 @@ jobs:
           - v1-dependencies-
       - run:
           name: Install dependencies
-          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+          command: |
+              bundle install --jobs=4 --retry=3 --path vendor/bundle
+              yarn install
       - save_cache:
           paths:
           - ./vendor/bundle
