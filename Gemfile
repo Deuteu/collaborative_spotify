@@ -39,8 +39,10 @@ end
 group :test do
   gem 'rubocop'
 
-  gem 'rspec-rails'
   gem 'dotenv-rails'
+
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'webmock'
 
   gem 'rspec_junit_formatter'
