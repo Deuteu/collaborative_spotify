@@ -7,7 +7,7 @@ describe 'Playlist management', api: true do
     before do
       FactoryBot.create_list(:playlist, 5)
 
-      get '/playlists'
+      get '/api/playlists'
     end
 
     include_examples :returns_ok
@@ -21,7 +21,7 @@ describe 'Playlist management', api: true do
   describe 'tracks index' do
     context 'with unknown playlist id' do
       before do
-        get '/playlists/0/tracks'
+        get '/api/playlists/0/tracks'
       end
 
       include_examples :returns_not_found
@@ -36,7 +36,7 @@ describe 'Playlist management', api: true do
 
         mock_find_tracks
 
-        get "/playlists/#{playlist_id}/tracks"
+        get "/api/playlists/#{playlist_id}/tracks"
       end
 
       include_examples :returns_ok
@@ -51,7 +51,7 @@ describe 'Playlist management', api: true do
   describe 'track add' do
     context 'with unknown playlist' do
       before do
-        post '/playlists/0/tracks'
+        post '/api/playlists/0/tracks'
       end
 
       include_examples :returns_not_found
@@ -63,7 +63,7 @@ describe 'Playlist management', api: true do
 
       context 'with no track id' do
         before do
-          post "/playlists/#{playlist_id}/tracks", params: {track_id: nil}
+          post "/api/playlists/#{playlist_id}/tracks", params: {track_id: nil}
         end
 
         include_examples :returns_bad_request
@@ -75,7 +75,7 @@ describe 'Playlist management', api: true do
           failed = true
           mock_find_track(failed)
 
-          post "/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}, headers: json_header
+          post "/api/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}, headers: json_header
 
           include_examples :returns_not_found
           include_examples :renders_json
@@ -101,7 +101,7 @@ describe 'Playlist management', api: true do
           end
 
           before do
-            post "/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}, headers: json_header
+            post "/api/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}, headers: json_header
           end
 
           include_examples :returns_unprocessable_entity
@@ -115,7 +115,7 @@ describe 'Playlist management', api: true do
           end
 
           before do
-            post "/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}
+            post "/api/playlists/#{playlist_id}/tracks", params: {track_id: FactoryBot.build(:track).id}
           end
 
           include_examples :returns_created
