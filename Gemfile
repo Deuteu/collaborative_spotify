@@ -64,3 +64,6 @@ gem 'awesome_print'
 
 # Webpacker for React
 gem 'webpacker'
+
+# To validate country code
+gem 'countries'
