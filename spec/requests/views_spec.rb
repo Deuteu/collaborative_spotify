@@ -23,11 +23,19 @@ describe 'Views' do
     include_examples :renders_home
   end
 
-  describe 'any undefined path' do
-    before do
-      get '/undefined/path'
+  describe 'undefined path' do
+    context 'starting by api/' do
+      it 'does not match' do
+        expect { get '/api/undefined/path' }.to raise_error(ActionController::RoutingError)
+      end
     end
 
-    include_examples :renders_home
+    context 'not starting by api/' do
+      before do
+        get '/undefined/path'
+      end
+
+      include_examples :renders_home
+    end
   end
 end
