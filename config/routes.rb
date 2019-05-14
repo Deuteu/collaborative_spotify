@@ -13,5 +13,14 @@ Rails.application.routes.draw do
     end
   end
 
+  scope '/api' do
+    resources :playlists, param: :playlist_id, only: [:index] do
+      member do
+        get 'tracks'
+        post 'tracks', action: :add_track
+      end
+    end
+  end
+
   get '*path' => 'views#home'
 end
