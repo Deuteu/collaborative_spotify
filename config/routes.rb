@@ -15,5 +15,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get '*path' => 'views#home'
+  get '*path' => 'views#home', constraints: {path: %r{(?!api/).*}}
 end
