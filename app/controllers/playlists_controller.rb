@@ -1,24 +1,8 @@
 # frozen_string_literal: true
 
 class PlaylistsController < ApplicationController
-  class << self
-    def format_element(element)
-      element.slice(
-        :id,
-        :track_id,
-        :name,
-        :artist_name,
-        :album_name,
-        :album_id,
-        :duration
-      ).tap(&:compact!)
-    end
-  end
-
   def index
-    playlists = Playlist.all.map do |playlist|
-      playlist.slice(:id, :name)
-    end
+    playlists = Playlist.all
 
     render status: :ok, json: playlists
   end
@@ -27,9 +11,7 @@ class PlaylistsController < ApplicationController
     return if require_playlist
 
     # Add a limit ?
-    tracks = PlaylistElement.with_track(playlist.active_elements).map do |element|
-      format_element(element)
-    end
+    tracks = PlaylistElement.with_track(playlist.active_elements)
 
     render status: :ok, json: tracks
   end
@@ -39,12 +21,10 @@ class PlaylistsController < ApplicationController
     return if require_track
     return if add_track_to_playlist
 
-    render status: :created, json: format_element(@element)
+    render status: :created, json: @element
   end
 
   private
-
-  delegate :format_element, to: :class
 
   def playlist
     @playlist ||= Playlist.find_by(id: params[:playlist_id])
