@@ -43,6 +43,7 @@ describe 'Playlist management', api: true do
       include_examples :renders_json
 
       it 'lists all active tracks' do
+        expect(parsed_response).to be_a(Array)
         expect(parsed_response.length).to eq(7)
       end
     end

@@ -2,6 +2,8 @@ unless ENV['INGNORE_COVERAGE']
   require 'simplecov'
   SimpleCov.start 'rails' do
     add_filter %r{^/factories/}
+
+    add_group 'Serializers', 'app/serializers'
   end
 end
 
