@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   get 'spotify/search', to: 'spotify#search'
 
   scope '/api' do
+    resources :tracks, param: :track_id, only: [] do
+      collection do
+        get 'search'
+      end
+    end
+
     resources :playlists, param: :playlist_id, only: [:index] do
       member do
         get 'tracks'
