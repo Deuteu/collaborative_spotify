@@ -3,6 +3,42 @@
 describe 'Playlist management', api: true do
   include SpotifyMock
 
+  describe 'search' do
+    context 'when no query is given' do
+      before do
+        get '/api/tracks/search?q='
+      end
+
+      include_examples :returns_bad_request
+      include_examples :renders_json
+    end
+
+    context 'with limit over maximum' do
+      before do
+        get '/api/tracks/search?q=query&limit=1000'
+      end
+
+      include_examples :returns_bad_request
+      include_examples :renders_json
+    end
+
+    context 'with valid limit and a query' do
+      before do
+        mock_search_track
+
+        get '/api/tracks/search?q=query&limit=20'
+      end
+
+      include_examples :returns_ok
+      include_examples :renders_json
+
+      it 'lists results' do
+        expect(parsed_response).to be_a(Array)
+        expect(parsed_response).to all(include('id', 'name', 'artist_name', 'album_name', 'album_id', 'duration'))
+      end
+    end
+  end
+
   describe 'index' do
     before do
       FactoryBot.create_list(:playlist, 5)
