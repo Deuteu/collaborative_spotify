@@ -74,6 +74,14 @@ class PlaylistElement < ApplicationRecord
       Rails.logger.info('PlaylistElement.with_track >> Error')
       elements
     end
+
+    def search(query, limit: 5)
+      RSpotify::Track.search(query, limit: limit, market: RSpotify::MARKET).map do |track|
+        element = PlaylistElement.new(spotify_id: track.id)
+        element.load_track(track)
+        block_given? ? yield(element) : element
+      end
+    end
   end
 
   private

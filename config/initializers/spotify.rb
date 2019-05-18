@@ -9,3 +9,11 @@ if (client_id = ENV['SPOTIFY_ID']) && (client_secret = ENV['SPOTIFY_SECRET'])
     end
   end
 end
+
+raise 'RSpotify::MARKET already defined' if defined?(RSpotify::MARKET)
+
+module RSpotify
+  market = ENV['SPOTIFY_MARKET'].to_s.upcase
+  market = 'FR' unless ISO3166::Data.codes.include?(market)
+  MARKET = market.freeze
+end
